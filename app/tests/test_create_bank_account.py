@@ -2,6 +2,7 @@ import unittest
 
 from ..Konto import Konto
 
+
 class TestCreateBankAccount(unittest.TestCase):
 
     def test_tworzenie_konta(self):
@@ -16,8 +17,16 @@ class TestCreateBankAccount(unittest.TestCase):
         self.assertEqual(len(pierwsze_konto.pesel), 11, "PESEL ma złą długość!")
         self.assertEqual(pierwsze_konto.saldo, 0, "Saldo nie jest zerowe!")
 
-        rabat = "PROM_R3&"
-        konto_rabat = Konto(imie, nazwisko, pesel, rabat=rabat)
+        rabat_start = "PROM_"
+        konto_rabat = Konto(imie, nazwisko, pesel, rabat=rabat_start + "R3&")
         self.assertEqual(konto_rabat.saldo, 50, "Konto nie otrzymało rabatu!")
 
-    #tutaj proszę dodawać nowe testy
+        konto_rabat_znaki_plus = Konto(imie, nazwisko, pesel, rabat=rabat_start + "R3&7")
+        self.assertEqual(konto_rabat_znaki_plus.saldo, 0, "Konto otrzymało rabat (za dużo znaków)!")
+
+        konto_rabat_znaki_minus = Konto(imie, nazwisko, pesel, rabat=rabat_start + "R3")
+        self.assertEqual(konto_rabat_znaki_minus.saldo, 0, "Konto otrzymało rabat (za mało znaków)!")
+
+        konto_rabat_znaki_start = Konto(imie, nazwisko, pesel, rabat="ABCD_" + "R3&")
+        self.assertEqual(konto_rabat_znaki_start.saldo, 0, "Konto otrzymało rabat (zły początek kodu)!")
+
