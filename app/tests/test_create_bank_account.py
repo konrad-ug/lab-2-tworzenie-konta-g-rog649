@@ -9,6 +9,8 @@ class TestCreateBankAccount(unittest.TestCase):
         imie = "Dariusz"
         nazwisko = "Januszewski"
         pesel = "97012663712"
+        pesel_senior = "55012663712"
+        pesel_junior = "01252663712"
 
         pierwsze_konto = Konto(imie, nazwisko, pesel)
         self.assertEqual(pierwsze_konto.imie, imie, "Imie nie zostało zapisane!")
@@ -30,3 +32,8 @@ class TestCreateBankAccount(unittest.TestCase):
         konto_rabat_znaki_start = Konto(imie, nazwisko, pesel, rabat="ABCD_" + "R3&")
         self.assertEqual(konto_rabat_znaki_start.saldo, 0, "Konto otrzymało rabat (zły początek kodu)!")
 
+        konto_rabat_senior = Konto(imie, nazwisko, pesel_senior, rabat=rabat_start + "R3&")
+        self.assertEqual(konto_rabat_senior.saldo, 0, "Senior dostał rabat!")
+
+        konto_rabat_senior = Konto(imie, nazwisko, pesel_senior, rabat=rabat_start + "R3&")
+        self.assertEqual(konto_rabat_senior.saldo, 50, "Junior nie dostał rabatu!")
