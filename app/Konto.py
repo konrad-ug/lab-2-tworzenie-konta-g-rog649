@@ -5,11 +5,22 @@ class Konto:
 
         rabat_start = "PROM_"
         rabat_chars = 3
-        if (
+        rabat_correct = (
             rabat is not None
             and rabat.startswith(rabat_start)
             and len(rabat) == len(rabat_start) + rabat_chars
-        ):
+        )
+        
+        pesel_year = int(pesel[0:2])
+        pesel_month = int(pesel[2:4])
+        elderly = (
+            # 1800-1899
+            pesel_month >= 81
+            # 1900-1959
+            or (pesel_month <= 12 and pesel_year < 60)
+        )
+
+        if rabat_correct and not elderly:
             self.saldo = 50
         else:
             self.saldo = 0
