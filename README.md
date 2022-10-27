@@ -1,4 +1,4 @@
-# bank-app
+# bank-app - Grzegorz Rogoziński
 
 | Termin oddania | Punkty |
 | ------- | ------ |
