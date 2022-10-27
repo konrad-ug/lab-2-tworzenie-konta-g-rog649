@@ -33,11 +33,11 @@ class TestExpressTransfer(unittest.TestCase):
         konto = KontoFirmowe(self.nazwa_firmy, self.nip)
         konto.saldo = 500
         konto.zaksieguj_przelew(400, rodzaj="ekspresowy")
-        konto.zaksieguj_przelew(konto.saldo, 95, "Saldo nie jest poprawne!")
+        self.assertEqual(konto.saldo, 95, "Saldo nie jest poprawne!")
 
 
     def test_udany_przelew_ekspresowy_saldo_ponizej_0(self):
         konto = KontoFirmowe(self.nazwa_firmy, self.nip)
         konto.saldo = 500
         konto.zaksieguj_przelew(600, rodzaj="ekspresowy")
-        konto.zaksieguj_przelew(konto.saldo, 500, "Saldo nie jest poprawne!")
+        self.assertEqual(konto.saldo, 500, "Saldo nie jest poprawne!")
