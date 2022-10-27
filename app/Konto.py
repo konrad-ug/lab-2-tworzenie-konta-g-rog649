@@ -30,7 +30,10 @@ class Konto:
         else:
             self.pesel = "Niepoprawny pesel!"
     
-    
-    def zaksieguj_przelew(self, kwota):
+
+    def zaksieguj_przelew(self, kwota, rodzaj="zwykły"):
         if self.saldo >= kwota:
             self.saldo -= kwota
+
+            if rodzaj == "ekspresowy":
+                self.saldo -= 1
