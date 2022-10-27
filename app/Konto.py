@@ -29,3 +29,8 @@ class Konto:
             self.pesel = pesel
         else:
             self.pesel = "Niepoprawny pesel!"
+    
+    
+    def zaksieguj_przelew(self, kwota):
+        if self.saldo >= kwota:
+            self.saldo -= kwota
