@@ -18,10 +18,10 @@ class TestMoneyTransfer(unittest.TestCase):
     
 
     def test_zbyt_dlugi_nip(self):
-        konto = KontoFirmowe("Jakieś", "Konto", "1234567890124525")
-        self.assertEqual(konto.nip, "Za długi NIP!")
+        konto = KontoFirmowe(self.nazwa_firmy, "1234567890124525")
+        self.assertEqual(konto.nip, self.nip, "Za długi NIP!")
     
-    
+
     def test_zbyt_krotki_nip(self):
-        konto = KontoFirmowe("Jakieś", "Konto", "123456")
-        self.assertEqual(konto.nip, "Za krótki NIP!")
+        konto = KontoFirmowe(self.nazwa_firmy, "123456")
+        self.assertEqual(konto.nip, self.nip, "Za krótki NIP!")
