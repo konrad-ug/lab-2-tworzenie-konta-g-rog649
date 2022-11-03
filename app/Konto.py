@@ -2,6 +2,10 @@ class Konto:
     def __init__(self, imie, nazwisko, pesel, rabat=None):
         self.imie = imie
         self.nazwisko = nazwisko
+        self.transfer_costs = {
+            "zwykły": 0,
+            "ekspresowy": 1
+        }
 
         rabat_start = "PROM_"
         rabat_chars = 3
@@ -29,3 +33,8 @@ class Konto:
             self.pesel = pesel
         else:
             self.pesel = "Niepoprawny pesel!"
+    
+
+    def zaksieguj_przelew(self, kwota, rodzaj="zwykły"):
+        if self.saldo >= kwota:
+            self.saldo -= kwota + self.transfer_costs[rodzaj]
