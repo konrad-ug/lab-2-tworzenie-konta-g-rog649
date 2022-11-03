@@ -40,4 +40,4 @@ jobs:
     - name: Show code coverage
       run: |
         python3 -m coverage run
-        python3 -m coverage report
+        python3 -m coverage report --fail-under=100
