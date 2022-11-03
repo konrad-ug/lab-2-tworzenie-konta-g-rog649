@@ -38,3 +38,6 @@ class Konto:
     def zaksieguj_przelew(self, kwota, rodzaj="zwykły"):
         if self.saldo >= kwota:
             self.saldo -= kwota + self.transfer_costs[rodzaj]
+
+    def test(self):
+        pass
