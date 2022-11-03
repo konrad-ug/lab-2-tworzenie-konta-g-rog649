@@ -37,3 +37,6 @@ class TestCreateBankAccount(unittest.TestCase):
         konto_junior = Konto("Grzegorz", "Stary", "01300166656", rabat=rabat_full)
         self.assertEqual(konto_senior.saldo, 0, "Senior sprzed 1960 roku dostał rabat!")
         self.assertEqual(konto_junior.saldo, rabat_amount, "Junior nie dostał rabatu!")
+
+    def test(self):
+        pass
