@@ -2,10 +2,8 @@ class Konto:
     def __init__(self, imie, nazwisko, pesel, rabat=None):
         self.imie = imie
         self.nazwisko = nazwisko
-        self.transfer_costs = {
-            "zwykły": 0,
-            "ekspresowy": 1
-        }
+        self.transfer_costs = {"zwykły": 0, "ekspresowy": 1}
+        self.historia = []
 
         rabat_start = "PROM_"
         rabat_chars = 3
@@ -14,7 +12,7 @@ class Konto:
             and rabat.startswith(rabat_start)
             and len(rabat) == len(rabat_start) + rabat_chars
         )
-        
+
         pesel_year = int(pesel[0:2])
         pesel_month = int(pesel[2:4])
         elderly = (
@@ -33,8 +31,14 @@ class Konto:
             self.pesel = pesel
         else:
             self.pesel = "Niepoprawny pesel!"
-    
 
-    def zaksieguj_przelew(self, kwota, rodzaj="zwykły"):
+    def zmien_stan_konta(self, kwota):
+        if kwota != 0:
+            self.saldo += kwota
+            self.historia.append(kwota)
+
+    def zaksieguj_przelew(self, kwota, konto, rodzaj="zwykły"):
         if self.saldo >= kwota:
-            self.saldo -= kwota + self.transfer_costs[rodzaj]
+            self.zmien_stan_konta(-kwota)
+            self.zmien_stan_konta(-self.transfer_costs[rodzaj])
+            konto.zmien_stan_konta(kwota)
