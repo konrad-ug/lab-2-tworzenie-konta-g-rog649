@@ -12,6 +12,7 @@ class TestCreditSystem(unittest.TestCase):
 
     def test_kredyt_nie_udzielony(self):
         konto = Konto(self.imie, self.nazwisko, self.pesel)
+        konto.historia = [-100, 100, -200, 100, 100]
         zaciagniety = konto.zaciagnij_kredyt(500)
         self.assertFalse(zaciagniety, "Kredyt został zaciągnięty, a nie powinien być!")
     
