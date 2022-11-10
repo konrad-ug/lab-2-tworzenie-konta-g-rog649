@@ -24,7 +24,7 @@ class TestCreditSystem(unittest.TestCase):
     
     def test_kredyt_udzielony_transakcje(self):
         konto = Konto(self.imie, self.nazwisko, self.pesel)
-        konto.historia = [-1000, 100, -200, 100, 700, -200]
+        konto.historia = [-1000, 100, -200, 100, 800, -200]
         zaciagniety = konto.zaciagnij_kredyt(500)
         self.assertEqual(konto.saldo, 500, "Saldo się nie zgadza!")
         self.assertTrue(zaciagniety, "Kredyt nie został zaciągnięty, a powinien być!")
