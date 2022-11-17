@@ -42,3 +42,19 @@ class Konto:
             self.zmien_stan_konta(-kwota)
             self.zmien_stan_konta(-self.transfer_costs[rodzaj])
             konto.zmien_stan_konta(kwota)
+
+    def zaciagnij_kredyt(self, kwota):
+        last_payments = (
+            len(self.historia) >= 3
+            and all(amount > 0 for amount in self.historia[-3:])
+        )
+        last_sum = (
+            len(self.historia) >= 5
+            and sum(self.historia[-5:]) > kwota
+        )
+
+        if not (last_payments or last_sum):
+            return False
+        
+        self.saldo += kwota
+        return True
