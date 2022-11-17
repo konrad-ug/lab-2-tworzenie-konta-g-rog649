@@ -19,7 +19,7 @@ class KontoFirmowe(Konto):
 
     def zaciagnij_kredyt(self, kwota):
         amount_twice_balance = self.saldo >= 2 * kwota
-        contains_zus = 1775 in self.historia
+        contains_zus = -1775 in self.historia
 
         if amount_twice_balance and contains_zus:
             self.saldo += kwota

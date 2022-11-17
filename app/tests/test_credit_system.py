@@ -40,14 +40,14 @@ class TestCreditSystem(unittest.TestCase):
 
     @parameterized.expand([
         # Saldo nie 2 razy większe, niż zaciągnięta kwota
-        [[1775], 1999, 1000, False],
-        [[1775], 3999, 2000, False],
+        [[-1775], 1999, 1000, False],
+        [[-1775], 3999, 2000, False],
         # W historii brak przelewu do ZUS
         [[], 2000, 1000, False],
         [[1324], 4000, 2000, False],
         # Oba warunki spełnone
-        [[1775], 2000, 1000, True],
-        [[-300, 1775, -500], 2000, 1000, True]
+        [[-1775], 2000, 1000, True],
+        [[-300, -1775, -500], 2000, 1000, True]
     ])
     def test_kredyt_konto_firmowe(self, historia, saldo, kwota, udany):
         self.kontoFirmowe.historia = historia
