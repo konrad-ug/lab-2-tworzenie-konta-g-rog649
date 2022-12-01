@@ -20,15 +20,19 @@ def stworz_konto():
 def ile_kont():
     return jsonify(RejestrKont.ile_kont()), 200
 
-@app.route("/konta/konto/<pesel>", methods=["GET"])
+@app.route("/konta/konto/<pesel>", methods=["GET", "PUT"])
 def wyszukaj_konto_z_peselem(pesel):
     konto = RejestrKont.wyszukaj_konto(pesel)
     if not konto:
         return jsonify("Nie ma takiego konta"), 404 
     
-    return jsonify(
-        imie=konto.imie,
-        nazwisko=konto.nazwisko,
-        pesel=konto.pesel,
-        saldo=konto.saldo
-    ), 200
+    if request.method == "PUT":
+        RejestrKont.zmien_konto(pesel)
+        return jsonify({}), 202
+    else:
+        return jsonify(
+            imie=konto.imie,
+            nazwisko=konto.nazwisko,
+            pesel=konto.pesel,
+            saldo=konto.saldo
+        ), 200
