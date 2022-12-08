@@ -10,6 +10,9 @@ def stworz_konto():
     print(f"Request o stworzenie konta z danymi: {dane}")
     if not all(field in dane for field in ("imie", "nazwisko", "pesel")):
         return jsonify("Nie ma wszystkich pól"), 400
+
+    if RejestrKont.wyszukaj_konto(dane["pesel"]):
+        return jsonify("Konto już istnieje"), 400
     
     konto = Konto(dane["imie"], dane["nazwisko"], dane["pesel"])
     RejestrKont.dodaj_konto(konto)
