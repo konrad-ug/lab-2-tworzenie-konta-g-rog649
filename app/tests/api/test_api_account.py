@@ -43,3 +43,15 @@ class TestCreateAccount(unittest.TestCase):
             "Grzegorz",
             "Imię się nie zmieniło!"
         )
+    
+    def test_unique_pesel(self):
+        body_copy = self.body.copy()
+        body_copy["pesel"] = self.body["pesel"][:-1]+"8"
+        code1 = requests.post(self.url + "/konta/stworz_konto", json=body_copy)
+        code2 = requests.post(self.url + "/konta/stworz_konto", json=body_copy)
+
+        self.assertEqual(code2.status_code, 400, "Zły status code!")
+        self.assertTrue(code2.json()["error"], "Nie ma komunikatu błędu!")
+        read_response = requests.get(self.url + f"/konta/konto/{body_copy['pesel']}")
+
+
