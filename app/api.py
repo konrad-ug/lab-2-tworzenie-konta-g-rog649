@@ -27,7 +27,7 @@ def wyszukaj_konto_z_peselem(pesel):
         return jsonify("Nie ma takiego konta"), 404 
     
     if request.method == "PUT":
-        RejestrKont.zmien_konto(pesel)
+        RejestrKont.zmien_konto(pesel, request.get_json())
         return jsonify({}), 202
     else:
         return jsonify(

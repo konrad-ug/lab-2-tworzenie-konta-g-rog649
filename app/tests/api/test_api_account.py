@@ -1,6 +1,8 @@
 import unittest
 import requests
 
+from ...RejestrKont import RejestrKont 
+
 class TestCreateAccount(unittest.TestCase):
     body = {
         "imie": "Dariusz",
@@ -8,7 +10,7 @@ class TestCreateAccount(unittest.TestCase):
         "pesel": "87013092831"
     }
 
-    url = "localhost:5000"
+    url = "http://localhost:5000"
 
     def test_create_account_correct(self):
         response = requests.post(self.url + "/konta/stworz_konto", json=self.body)
@@ -24,14 +26,17 @@ class TestCreateAccount(unittest.TestCase):
         self.assertEqual(response_body["pesel"], self.body["pesel"], "PESEL inne!")
 
     def test_edit_account(self):
-        requests.post(self.url + "/konta/stworz_konto", json=self.body)
+        body_copy = self.body.copy()
+        body_copy["pesel"] = self.body["pesel"][:-1]+"3"
+
+        requests.post(self.url + "/konta/stworz_konto", json=body_copy)
         update_response = requests.put(
-            self.url + f"/konta/konto/{self.body['pesel']}",
+            self.url + f"/konta/konto/{body_copy['pesel']}",
             json={
                 "imie": "Grzegorz"
             }
         )
-        read_response = requests.get(self.url + f"/konta/konto/{self.body['pesel']}")
+        read_response = requests.get(self.url + f"/konta/konto/{body_copy['pesel']}")
         read_response_body = read_response.json()
         self.assertEqual(
             read_response_body["imie"],

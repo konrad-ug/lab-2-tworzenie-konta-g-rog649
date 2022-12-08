@@ -14,7 +14,7 @@ class RejestrKont:
             if key not in allowed_keys:
                 continue
 
-            account[key] = value
+            setattr(account, key, value)
         
         return False
 
