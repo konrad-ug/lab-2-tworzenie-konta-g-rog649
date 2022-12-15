@@ -51,7 +51,8 @@ class TestCreateAccount(unittest.TestCase):
         code2 = requests.post(self.url + "/konta/stworz_konto", json=body_copy)
 
         self.assertEqual(code2.status_code, 400, "Zły status code!")
-        self.assertTrue(code2.json()["error"], "Nie ma komunikatu błędu!")
+        self.assertTrue(code2.json(), "Nie ma komunikatu błędu!")
+
         read_response = requests.get(self.url + f"/konta/konto/{body_copy['pesel']}")
 
 
