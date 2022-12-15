@@ -23,7 +23,7 @@ def stworz_konto():
 def ile_kont():
     return jsonify(RejestrKont.ile_kont()), 200
 
-@app.route("/konta/konto/<pesel>", methods=["GET", "PUT"])
+@app.route("/konta/konto/<pesel>", methods=["GET", "PUT", "DELETE"])
 def wyszukaj_konto_z_peselem(pesel):
     konto = RejestrKont.wyszukaj_konto(pesel)
     if not konto:
@@ -32,6 +32,9 @@ def wyszukaj_konto_z_peselem(pesel):
     if request.method == "PUT":
         RejestrKont.zmien_konto(pesel, request.get_json())
         return jsonify({}), 202
+    elif request.method == "DELETE":
+        RejestrKont.usun_konto(pesel, request.get_json())
+        return jsonify({}, 202)
     else:
         return jsonify(
             imie=konto.imie,

@@ -31,3 +31,8 @@ class RejestrKont:
             ),
             None
         )
+    
+    @classmethod
+    def usun_konto(cls, pesel):
+        index = map(lambda k: k.pesel, cls.konta).find(pesel)
+        cls.konta.pop(index)
