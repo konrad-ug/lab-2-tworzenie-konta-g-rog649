@@ -32,8 +32,10 @@ jobs:
           black .
       - name: Test with unittest
         run: |
-          python3 -m flask --app app/api.py run
+          python3 -m flask --app app/api.py run &
+          flask_pid=$!
           python3 -m unittest
+          kill -9 flask_pid
       - name: Show code coverage
         run: |
           python3 -m coverage run -m unittest
