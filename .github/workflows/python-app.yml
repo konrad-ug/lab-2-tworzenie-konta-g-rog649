@@ -32,6 +32,7 @@ jobs:
           black .
       - name: Test with unittest
         run: |
+          python3 -m flask --app app/api.py run
           python3 -m unittest
       - name: Show code coverage
         run: |
