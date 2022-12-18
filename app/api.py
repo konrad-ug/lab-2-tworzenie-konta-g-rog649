@@ -26,15 +26,15 @@ def ile_kont():
 @app.route("/konta/konto/<pesel>", methods=["GET", "PUT", "DELETE"])
 def wyszukaj_konto_z_peselem(pesel):
     konto = RejestrKont.wyszukaj_konto(pesel)
-    if not konto:
+    if request.method != "DELETE" and not konto:
         return jsonify("Nie ma takiego konta"), 404 
     
     if request.method == "PUT":
         RejestrKont.zmien_konto(pesel, request.get_json())
-        return jsonify({}), 202
+        return jsonify({}), 200
     elif request.method == "DELETE":
-        RejestrKont.usun_konto(pesel, request.get_json())
-        return jsonify({}, 202)
+        RejestrKont.usun_konto(pesel)
+        return jsonify({}), 200
     else:
         return jsonify(
             imie=konto.imie,

@@ -34,5 +34,7 @@ class RejestrKont:
     
     @classmethod
     def usun_konto(cls, pesel):
-        index = map(lambda k: k.pesel, cls.konta).find(pesel)
-        cls.konta.pop(index)
+        for i, konto in enumerate(cls.konta):
+            if konto.pesel == pesel:
+                cls.konta.pop(i)
+                return
