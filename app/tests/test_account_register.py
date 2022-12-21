@@ -42,3 +42,15 @@ class TestAccountRegister(unittest.TestCase):
         found_account = RejestrKont.wyszukaj_konto(self.konto2.pesel)
         self.assertEqual(found_account, self.konto2, "Złe konto znalezione!")
     
+    def test_usun_konto(self):
+        RejestrKont.dodaj_konto(self.konto1)
+        RejestrKont.dodaj_konto(self.konto2)
+        RejestrKont.usun_konto(self.konto1.pesel)
+        self.assertEqual(RejestrKont.ile_kont(), 1, "Konto nie zostało usunięte!")
+    
+    def test_zmien_konto(self):
+        RejestrKont.dodaj_konto(self.konto1)
+        RejestrKont.zmien_konto(self.konto1.pesel, {"imie": "Grzegorz", "pesel": "nieZmieniaj"})
+        found_account = RejestrKont.wyszukaj_konto(self.konto1.pesel)
+        self.assertEqual(found_account.imie, "Grzegorz", "Imię nie zmieniło się!")
+        self.assertEqual(found_account.pesel, self.konto1.pesel, "Pesel zmienił się!")
