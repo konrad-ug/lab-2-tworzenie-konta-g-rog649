@@ -28,3 +28,7 @@ class TestMoneyTransfer(unittest.TestCase):
         self.assertEqual(
             konto.nip, "Niepoprawny NIP!", "Za krótki NIP przypisany do konta!"
         )
+    
+    def test_niepoprawny_nip(self):
+        konto = KontoFirmowe(self.nazwa_firmy, "0000000000")
+        self.assertNotEqual(konto.nip, "0000000000", "Nieprawidłowy numer NIP!")
