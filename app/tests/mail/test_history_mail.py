@@ -20,5 +20,5 @@ class TestHistoryMail(unittest.TestCase):
         smtp_connector = Mock(spec=SMTPConnection)
 
         status = konto1.send_history_mail("szef@firma.pl", smtp_connector)
-        smtp_connector.send_mail().assert_called_once()
+        smtp_connector.send_mail.assert_called_once()
         self.assertTrue(status)
