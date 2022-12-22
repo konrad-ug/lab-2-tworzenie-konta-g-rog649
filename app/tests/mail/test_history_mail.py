@@ -18,7 +18,8 @@ class TestHistoryMail(unittest.TestCase):
         konto1.zaksieguj_przelew(100, konto2)
 
         smtp_connector = Mock(spec=SMTPConnection)
-
+        smtp_connector.send_mail.return_value = True
+        
         status = konto1.send_history_mail("szef@firma.pl", smtp_connector)
         smtp_connector.send_mail.assert_called_once()
         self.assertTrue(status)

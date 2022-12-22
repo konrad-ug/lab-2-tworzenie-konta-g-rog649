@@ -1,3 +1,3 @@
 class SMTPConnection:
-    def send_mail(self, receiver, subject, content):
+    def send_mail(self, mail, subject, content):
         return False
