@@ -1,8 +1,9 @@
 import unittest
 from parameterized import parameterized
 
+from app.tests import KontoFirmoweMock
+
 from ..Konto import Konto
-from ..KontoFirmowe import KontoFirmowe
 
 class TestCreditSystem(unittest.TestCase):
     def setUp(self):
@@ -14,7 +15,7 @@ class TestCreditSystem(unittest.TestCase):
         nazwa_firmy = "Januszex sp. z o.o."
         nip = "8461627563"
         
-        self.kontoFirmowe = KontoFirmowe(nazwa_firmy, nip)
+        self.kontoFirmowe = KontoFirmoweMock(nazwa_firmy, nip)
         self.messages = [
             "Kredyt został zaciągnięty, a nie powinien być!",
             "Kredyt nie został zaciągnięty, a powinien być!"
