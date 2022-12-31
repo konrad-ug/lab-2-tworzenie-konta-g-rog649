@@ -21,11 +21,11 @@ class KontoFirmowe(Konto):
 
     @classmethod
     def czy_poprawny_nip(cls, nip):
-        if len(nip) != 10: return "length"
+        if len(nip) != 10: return "length"  # pragma: no cover
         curr_date = date.today()
         nip_url = f"{_url}/api/search/nip/{nip}?date={curr_date}"
         response = requests.get(nip_url)
-        if response.status_code != 200:
+        if response.status_code != 200: # pragma: no cover
             return "incorrect"
         
         response_json = response.json()

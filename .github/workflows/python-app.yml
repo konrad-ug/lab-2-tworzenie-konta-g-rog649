@@ -43,5 +43,5 @@ jobs:
           flask_pid=$!
           sleep 2
           python3 -m coverage run -m unittest
-          python3 -m coverage report --fail-under=100
+          python3 -m coverage report -m --fail-under=100
           kill -9 $flask_pid
