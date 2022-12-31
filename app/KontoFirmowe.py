@@ -1,5 +1,9 @@
+import os
 from app.Konto import Konto
+import requests
+from datetime import date
 
+_url = os.getenv("BANK_APP_MF_URL", "https://wl-api.mf.gov.pl")
 
 class KontoFirmowe(Konto):
     def __init__(self, nazwa_firmy, nip):
@@ -8,14 +12,27 @@ class KontoFirmowe(Konto):
         self.transfer_costs = {"zwykły": 0, "ekspresowy": 5}
         self.historia = []
 
-        if KontoFirmowe.czy_poprawny_nip(nip):
-            self.nip = nip
-        else:
-            self.nip = "Niepoprawny NIP!"
+        nip_errors = self.czy_poprawny_nip(nip)
+        self.nip = {
+            "": nip,
+            "incorrect": "Pranie!",
+            "length": "Niepoprawny NIP!"
+        }[nip_errors]
 
     @classmethod
     def czy_poprawny_nip(cls, nip):
-        return len(nip) == 10
+        if len(nip) != 10: return "length"  # pragma: no cover
+        curr_date = date.today()
+        nip_url = f"{_url}/api/search/nip/{nip}?date={curr_date}"
+        response = requests.get(nip_url)
+        if response.status_code != 200: # pragma: no cover
+            return "incorrect"
+        
+        response_json = response.json()
+        if response_json["result"]["subject"] is None:
+            return "incorrect"
+        
+        return ""
 
     def zaciagnij_kredyt(self, kwota):
         amount_twice_balance = self.saldo >= 2 * kwota
