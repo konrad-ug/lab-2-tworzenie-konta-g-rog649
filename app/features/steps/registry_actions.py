@@ -71,5 +71,5 @@ def delete_account(context, pesel):
 
 @when("I clear the account registry")
 def delete_all_accounts(context):
-    # TODO dopisac endpoint w API i tutaj go uzyć
-    pass
+    response = requests.post(URL + f"/konta/wyczysc")
+    assert_equal(response.status_code, 200)
