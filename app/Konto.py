@@ -1,3 +1,5 @@
+from datetime import date
+
 class Konto:
     def __init__(self, imie, nazwisko, pesel, rabat=None):
         self.imie = imie
@@ -58,3 +60,12 @@ class Konto:
         
         self.saldo += kwota
         return True
+    
+    def send_history_mail(self, mail, connection):
+        success = connection.send_mail(
+            mail,
+            f"Wyciąg z dnia {date.today()}",
+            f"Twoja historia konta to: {self.historia}"
+        )
+
+        return success
